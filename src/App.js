@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { HashRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import SignUpForm from './component/Auth/SignUpForm';
 import SignInForm from './component/Auth/SignInForm';
+import './asset/css-loader.css'
 
 import './App.css';
 
