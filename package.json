@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "alertify.js": "^1.0.12",
     "axios": "^0.18.0",
     "react": "^16.8.1",
     "react-alertify-js": "0.0.1",

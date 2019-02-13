@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import * as alertify from 'alertify.js';
+
 
 class SignUpForm extends Component {
 
@@ -10,6 +12,7 @@ class SignUpForm extends Component {
         this.handelSubmit = this.handelSubmit.bind(this);
 
     }
+
 
     state = {
         name: '',
@@ -200,12 +203,13 @@ class SignUpForm extends Component {
                         console.log(res);
                         console.log(res.data);
                         this.setState({showLoader: false});
-
+                        alertify.logPosition('top right').success(res.data.message);
 
                     })
                     .catch((err) => {
                         console.error(err.response);
-                        this.setState({showLoader: false})
+                        this.setState({showLoader: false});
+                        alertify.logPosition('top right').error(err.response.data.message);
 
                     })
 
