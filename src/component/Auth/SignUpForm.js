@@ -13,6 +13,7 @@ class SignUpForm extends Component {
 
         this.handelSubmit = this.handelSubmit.bind(this);
 
+
     }
 
 
@@ -43,7 +44,11 @@ class SignUpForm extends Component {
         length: false,
         showLoader: false,
 
+
     };
+
+
+
 
 
     showUpperCase = () => {
@@ -206,6 +211,8 @@ class SignUpForm extends Component {
                         console.log(res.data);
                         this.setState({showLoader: false});
                         alertify.logPosition('top right').success(res.data.message);
+
+
 
                     })
                     .catch((err) => {

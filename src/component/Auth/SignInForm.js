@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
+import Dashboard from '../../Dashboard/dashboard'
 import {regEmail} from "../../shared/regex";
 import axios from 'axios';
 import {loginUrl} from '../../shared/url'
 import * as alertify from 'alertify.js';
+import SignUpForm from "./SignUpForm";
+
 
 class SignInForm extends Component {
     constructor(props) {
@@ -12,11 +15,11 @@ class SignInForm extends Component {
     }
 
     state = {
-        email: '',
+        email: 'shiv@gmail.com',
         emailRequired: false,
         emailError: false,
 
-        pass: '',
+        pass: 'Hello@123',
         passRequired: false,
     };
 
@@ -75,14 +78,14 @@ class SignInForm extends Component {
                         console.log(res);
                         console.log(res.data);
                         this.setState({showLoader: false});
-                        localStorage.setItem('token', res.data.token)
-
+                        localStorage.setItem('token', res.data.token);
+                        this.props.route.push('/')
 
                     })
                     .catch((err) => {
                         console.error(err.response);
                         this.setState({showLoader: false});
-                        alertify.logPosition('top right').error(err.response.data.message);
+                         alertify.logPosition('top right').error(err.response.data.message);
 
                     })
 
