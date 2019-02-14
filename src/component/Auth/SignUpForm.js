@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {regUpper, regLower, regNumber, regChar, regLength, regEmail} from '../../shared/regex'
+import {signUrl} from '../../shared/url'
 import * as alertify from 'alertify.js';
 
 
@@ -45,7 +47,7 @@ class SignUpForm extends Component {
 
 
     showUpperCase = () => {
-        if (!/[A-Z]/.test(this.state.pass)) {
+        if (!regUpper.test(this.state.pass)) {
             this.setState({upperCase: true})
         } else {
             this.setState({upperCase: false})
@@ -53,7 +55,7 @@ class SignUpForm extends Component {
     };
 
     showLowerCase = () => {
-        if (!/[a-z]/.test(this.state.pass)) {
+        if (!regLower.test(this.state.pass)) {
             this.setState({lowerCase: true})
         } else {
             this.setState({lowerCase: false})
@@ -61,7 +63,7 @@ class SignUpForm extends Component {
     };
 
     showNumber = () => {
-        if (!/\d/.test(this.state.pass)) {
+        if (!regNumber.test(this.state.pass)) {
             this.setState({number: true})
         } else {
             this.setState({number: false})
@@ -69,7 +71,7 @@ class SignUpForm extends Component {
     };
 
     showChar = () => {
-        if (!/\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s/.test(this.state.pass)) {
+        if (!regChar.test(this.state.pass)) {
             this.setState({char: true})
         } else {
             this.setState({char: false})
@@ -77,7 +79,7 @@ class SignUpForm extends Component {
     };
 
     showLength = () => {
-        if (!/(?=.{8,})/.test(this.state.pass)) {
+        if (!regLength.test(this.state.pass)) {
             this.setState({length: true})
         } else {
             this.setState({length: false})
@@ -101,9 +103,9 @@ class SignUpForm extends Component {
 
 
     validateEmail = () => {
-        if (this.state.email == '') {
+        if (this.state.email === '') {
             this.setState({emailRequired: true})
-        } else if (!/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i.test(this.state.email)) {
+        } else if (!regEmail.test(this.state.email)) {
             this.setState({emailError: true})
         }
     };
@@ -119,7 +121,7 @@ class SignUpForm extends Component {
 
 
     validateName = () => {
-        if (this.state.name == '') {
+        if (this.state.name === '') {
             this.setState({nameRequired: true})
         } else if (!/^[a-zA-Z ]*$/.test(this.state.name)) {
             this.setState({nameError: true})
@@ -137,7 +139,7 @@ class SignUpForm extends Component {
 
 
     validateNo = () => {
-        if (this.state.no == '') {
+        if (this.state.no === '') {
             this.setState({noRequired: true})
         } else if (!/^[0-9]{10}$/.test(this.state.no)) {
             this.setState({noError: true})
@@ -154,7 +156,7 @@ class SignUpForm extends Component {
     };
 
     validatePass = () => {
-        if (this.state.pass == '') {
+        if (this.state.pass === '') {
             this.setState({passRequired: true})
         } else if (!/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/.test(this.state.pass)) {
             this.setState({passError: true})
@@ -190,7 +192,7 @@ class SignUpForm extends Component {
             if (!this.state.nameRequired && !this.state.nameError && !this.state.emailRequired && !this.state.emailError
                 && !this.state.noRequired && !this.state.noError && !this.state.passRequired && !this.state.passError && !this.state.checkRequired) {
                 this.setState({showLoader: true});
-                const url = 'http://10.42.0.1:3000/api/user/signup';
+
                 const body = {
                     name: this.state.name,
                     email: this.state.email,
@@ -198,7 +200,7 @@ class SignUpForm extends Component {
                     password: this.state.pass,
                 };
 
-                axios.post(url, body)
+                axios.post(signUrl, body)
                     .then((res) => {
                         console.log(res);
                         console.log(res.data);

@@ -1,57 +1,141 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+import {regEmail} from "../../shared/regex";
+import axios from 'axios';
+import {loginUrl} from '../../shared/url'
+import * as alertify from 'alertify.js';
 
 class SignInForm extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            email: '',
-            password: ''
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    constructor(props) {
+        super(props)
+        this.handelSubmit = this.handelSubmit.bind(this);
     }
 
-    handleChange(e) {
-        let target = e.target;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
-        let name = target.name;
+    state = {
+        email: '',
+        emailRequired: false,
+        emailError: false,
 
-        this.setState({
-          [name]: value
-        });
+        pass: '',
+        passRequired: false,
+    };
+
+
+    validateEmail = () => {
+        if (this.state.email === '') {
+            this.setState({emailRequired: true})
+        } else if (!regEmail.test(this.state.email)) {
+            this.setState({emailError: true})
+        }
+    };
+
+    changeEmail = (event) => {
+
+        this.setState({emailRequired: false});
+        this.setState({emailError: false});
+        this.setState({email: event.target.value},  () => {
+            this.validateEmail()
+        })
+
+    };
+
+    validatePass = () => {
+        if (this.state.pass ===''){
+            this.setState({passRequired: true})
+        }
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
+    changePass = (event) => {
+        this.setState({passRequired: false});
+        this.setState({pass: event.target.value}, () => {
+            this.validatePass()
+        })
+    };
 
-        console.log('The form was submitted with the following data:');
-        console.log(this.state);
-    }
+
+
+
+
+    handelSubmit = async (e) => {
+        if (e) e.preventDefault();
+        {
+            await this.validateEmail();
+            await this.validatePass();
+
+            if(!this.state.emailRequired && !this.state.emailError && !this.state.passRequired) {
+                this.setState({showLoader: true});
+
+                const body = {
+                    email: this.state.email,
+                    password: this.state.pass,
+                };
+
+                axios.post(loginUrl, body)
+                    .then((res) => {
+                        console.log(res);
+                        console.log(res.data);
+                        this.setState({showLoader: false});
+                        localStorage.setItem('token', res.data.token)
+
+
+                    })
+                    .catch((err) => {
+                        console.error(err.response);
+                        this.setState({showLoader: false});
+                        alertify.logPosition('top right').error(err.response.data.message);
+
+                    })
+
+            }
+
+
+
+                }
+            }
+
+
+
 
     render() {
         return (
-        <div className="FormCenter">
-            <form onSubmit={this.handleSubmit} className="FormFields" onSubmit={this.handleSubmit}>
-            <div className="FormField">
-                <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
-              </div>
+            <div className="FormCenter">
+                {this.state.showLoader ?
+                    <div className="loader loader-default is-active" data-text="Verifying, please wait ..." data-blink
+                         id="loginLoader">
+                    </div> : null}
 
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="password">Password</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
-              </div>
+                <form onSubmit={this.handelSubmit}>
 
-              <div className="FormField">
-                  <button className="FormField__Button mr-20" onSubmit ={this.handleSubmit}>Sign In</button> <Link to="/" className="FormField__Link">Create an account</Link>
-              </div>
-            </form>
-          </div>
-        );
+                    <div className="FormField">
+                        <label className="FormField__Label" htmlFor="email">Email ID:</label>
+                        <input className="FormField__Input" type="email" placeholder="Enter your Email"
+                               onChange={this.changeEmail} value={this.state.email}/>
+                        {this.state.emailRequired ? <p className="errorMsg">Email required</p> : null}
+                        {this.state.emailError ? <p className="errorMsg">Invalid email</p> : null}
+                    </div>
+
+                    <div className="FormField">
+                        <label className="FormField__Label" htmlFor="password">Password:</label>
+                        <input className="FormField__Input" className="FormField__Input"
+                               placeholder="Enter your Password" type="password" onChange={this.changePass}
+                               value={this.state.pass}/>
+                        {this.state.passRequired ? <p className="errorMsg">Password required</p> : null}
+                        {this.state.passError ? <p className="errorMsg">Invalid Password</p> : null}
+                    </div>
+
+                    <input type="submit" value="Log In" className="FormField__Button mr-20"></input>
+
+
+                </form>
+
+
+            </div>
+        )
     }
+
+
 }
+
+
 
 export default SignInForm;
