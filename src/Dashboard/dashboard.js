@@ -1,7 +1,18 @@
 import React, {Component} from 'react';
-import axios from 'axios'
+import 'bootstrap/dist/css/bootstrap.css';
+import axios from 'axios';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import TagsInput from 'react-tagsinput';
+import 'react-tagsinput/react-tagsinput.css'
+import AddQuestion from './addQuestion';
 
 class Dashboard extends Component {
+
+    state = {
+        error: [],
+        questions: []
+    }
+
 
     componentDidMount() {
 
@@ -13,16 +24,59 @@ class Dashboard extends Component {
                     'Authorization': 'Bearer ' + token
                 }
             })
-            .then(data => {
-                console.log(data)
+            .then(response => {
+                this.setState({questions: response.data.data})
             })
+
 
     }
 
+
+    countLike = (likeArr) => {
+        let count = 0
+        for (let i = 0; i < likeArr.length; i++) {
+            count += likeArr[i].count
+        }
+
+        return count
+    }
+
     render() {
+
         return (
+
             <div>
-                hello
+                <Link className="btn-lg btn-success link" to="/addquestion">Add question</Link>
+                <div>{
+
+                    this.state.questions.map(question =>
+                        <div className="card " key={question._id}>
+                            <p className=" card-header title">{question.title} </p>
+
+                            <div className="card-body">
+                                <p>{question.description} </p>
+                                <div className="flex-container">{question.tags.map(tag =>
+                                    <p>
+                                        <button className="btn-danger ">{tag.name}</button>
+                                    </p>
+                                )}
+                                </div>
+
+                                <button className="btn btn-primary flex-container">
+                                    Like {
+                                    this.countLike(question.like)
+                                }
+                                </button>
+                                <p><b>Created at</b> - {question.createdAt} </p>
+                                <p><b>Updated at</b> - {question.updatedAt} </p>
+                            </div>
+
+
+                        </div>
+                    )
+                }
+                </div>
+
             </div>
         );
     }
