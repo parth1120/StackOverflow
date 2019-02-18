@@ -105,7 +105,7 @@ class AddQuestion extends Component {
         return (
 
             <div>
-                <form className=" cardAdd App__Form abc ">
+                <form className=" cardAdd App__Form ">
 
                     <div className="FormField">
                         <label className="questionField">Title : </label>
