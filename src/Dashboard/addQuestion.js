@@ -4,7 +4,7 @@ import * as alertify from "alertify.js";
 
 class AddQuestion extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.handelSubmit = this.handelSubmit.bind(this);
     }
 
@@ -17,7 +17,7 @@ class AddQuestion extends Component {
         descriptionRequired: false,
         tagsRequired: false,
         token : ''
-    }
+    };
 
     validateTitle = () => {
         if (this.state.title === '') {
@@ -70,7 +70,7 @@ class AddQuestion extends Component {
         {
             await this.validateTitle();
             await this.validateDescription();
-            await this. validateTags();
+            await this.validateTags();
 
             if (!this.state.titleRequired && !this.state.validateDescription  && !this.state.validateTags) {
 
@@ -98,14 +98,20 @@ class AddQuestion extends Component {
                     })
             }
         }
-    }
+    };
 
 
     render() {
         return (
 
             <div>
-                <form className=" cardAdd App__Form ">
+                <div className= "add">
+                    Add Your Question
+                </div>
+
+
+
+                <form className = "cardAdd App__Form ">
 
                     <div className="FormField">
                         <label className="questionField">Title : </label>

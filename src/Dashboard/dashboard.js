@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
-import TagsInput from 'react-tagsinput';
+import {Link} from 'react-router-dom';
+
 import 'react-tagsinput/react-tagsinput.css'
-import AddQuestion from './addQuestion';
+
 
 class Dashboard extends Component {
 
     state = {
         error: [],
         questions: []
-    }
+    };
 
 
     componentDidMount() {
@@ -33,30 +33,31 @@ class Dashboard extends Component {
 
 
     countLike = (likeArr) => {
-        let count = 0
+        let count = 0;
         for (let i = 0; i < likeArr.length; i++) {
             count += likeArr[i].count
         }
 
         return count
-    }
+    };
 
     render() {
 
         return (
 
-            <div>
+            <div className="container">
                 <Link className="btn-lg btn-success link" to="/addquestion">Add question</Link>
+
                 <div>{
 
                     this.state.questions.map(question =>
-                        <div className="card " key={question._id}>
+                        <div className=" cardd col-md-12" key={question._id}>
                             <p className=" card-header title">{question.title} </p>
 
                             <div className="card-body">
                                 <p>{question.description} </p>
                                 <div className="flex-container">{question.tags.map(tag =>
-                                    <p>
+                                    <p key={tag._id}>
                                         <button className="btn-danger ">{tag.name}</button>
                                     </p>
                                 )}

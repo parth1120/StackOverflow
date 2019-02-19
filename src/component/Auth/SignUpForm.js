@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+
 import axios from 'axios';
 import {regUpper, regLower, regNumber, regChar, regLength, regEmail} from '../../shared/regex'
 import {signUrl} from '../../shared/url'
 import * as alertify from 'alertify.js';
+import '../../App.css';
+import FirstPage from './firstPage'
 
 
 class SignUpForm extends Component {
@@ -231,6 +233,8 @@ class SignUpForm extends Component {
 
     render() {
         return (
+            <FirstPage>
+                <div className="App">
 
             <div className="FormCenter">
                 {this.state.showLoader ?
@@ -243,7 +247,7 @@ class SignUpForm extends Component {
 
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="email">Name:</label>
-                            <input className="FormField__Input" className="FormField__Input"
+                            <input className="FormField__Input FormField__Input"
                                    placeholder="Enter your Name" type="text" onChange={this.changeName}
                                    value={this.state.name}/>
                             {this.state.nameRequired ? <p className="errorMsg">Name required</p> : null}
@@ -260,16 +264,16 @@ class SignUpForm extends Component {
 
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="email">Mobile No.:</label>
-                            <input className="FormField__Input" className="FormField__Input"
-                                   placeholder="Enter your Number" type="text" onChange={this.changeNo}
-                                   placeholder="Enter your email" value={this.state.no}/>
+                            <input className="FormField__Input  FormField__Input"
+                                    onChange={this.changeNo}
+                                   placeholder="Enter your Number" value={this.state.no}/>
                             {this.state.noRequired ? <p className="errorMsg">Number required</p> : null}
                             {this.state.noError ? <p className="errorMsg">Invalid Number</p> : null}
                         </div>
 
                         <div className="FormField">
                             <label className="FormField__Label" htmlFor="email">Password:</label>
-                            <input className="FormField__Input" className="FormField__Input"
+                            <input className="FormField__Input FormField__Input"
                                    placeholder="Enter your Password" type="password" onChange={this.changePass}
                                    value={this.state.pass}/>
                             {this.state.passRequired ? <p className="errorMsg">Password required</p> : null}
@@ -291,7 +295,8 @@ class SignUpForm extends Component {
 
 
                         <div>
-                            <label>Terms and conditions</label>
+                            <label className="FormField__Label1">Terms and conditions</label>
+                            <span> "      "</span>
 
                             <input type="checkbox" onChange={this.changeCheck} value={this.state.check}></input>
                             {this.state.checkRequired ? <p className="errorMsg">Terms required</p> : null}
@@ -304,6 +309,8 @@ class SignUpForm extends Component {
                     </form>
                 </div>
             </div>
+                </div>
+            </FirstPage>
 
         );
     }

@@ -1,233 +1,282 @@
 .App {
-  height: 100vh;
-  display: flex;
-  color: white;
+    height: 100vh;
+    display: flex;
+    color: white;
+    padding: 100px;
+    margin-left: 20vh;
 }
 
 .App__Aside {
-  width: 50%;
-  background-color: #66DAC7;
-  
+    width: 50%;
+    background-color: #66DAC7;
+
 }
 
 
 .App__AsideText {
-  font-size: 250%;
-  padding: 25%;
-  text-align: justify;
-  text-shadow: 3px 2px #2E4158;
+    font-size: 250%;
+
+    padding: 25%;
+    text-align: justify;
+    text-shadow: 3px 2px #2E4158;
 }
 
 .App__Form {
-  width: 50%;
-  background-color: #2E4158;
-  padding: 25px 40px;
-  overflow: auto;
+    width: 50%;
+    color: black;
+    padding: 200px 40px;
+    margin-left: 500px;
+    overflow: auto;
 }
 
 .PageSwitcher {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20%;
 }
 
 .PageSwitcher__Item {
-  background-color: #4C5D72;
-  color: #9DA6B1;
-  padding: 10px 25px;
-  cursor: pointer;
-  font-size: .9em;
-  border: none;
-  outline: none;
-  display: inline-block;
-  text-decoration: none;
+    background-color: #4C5D72;
+    color: #9DA6B1;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-size: .9em;
+    border: none;
+    outline: none;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .PageSwitcher__Item--Active {
-  background-color: #5ED0C0;
-  color: white;
+    background-color: #5ED0C0;
+    color: white;
 }
 
 .PageSwitcher__Item:first-child {
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
 }
+
 .PageSwitcher__Item:last-child {
-  border-top-right-radius: 25px;
-  border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .FormCenter {
-  margin-bottom: 100px;
+    margin-bottom: 100px;
 }
 
 .FormTitle {
-  color: #707C8B;
-  font-weight: 300;
-  margin-bottom: 50px;
+    color: #707C8B;
+    font-weight: 300;
+    margin-bottom: 50px;
+    align-content: center;
 }
 
 .FormTitle__Link {
-  color: #707C8B;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.7em;
-  margin: 0 10px;
-  padding-bottom: 5px;
+    color: #707C8B;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.7em;
+    margin: 0 10px;
+    padding-bottom: 5px;
+    align-content: center;
+
 }
 
 .FormTitle__Link:first-child {
-  margin-left: 0;
+    margin-left: 0;
 }
 
 .FormTitle__Link--Active {
-  color: white;
-  border-bottom: 1px solid #199087;
+    color: white;
+    border-bottom: 1px solid #199087;
 }
 
 .FormField {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .FormField__Label {
-  display: block;
-  text-transform: uppercase;
-  font-size: .9em;
-  color: white;
+    display: block;
+    text-transform: uppercase;
+    font-size: 25px;
+    color: black;
 }
+
 .FormField__Input {
-  width: 85%;
-  background-color: transparent;
-  border: none;
-  color: white;
-  outline: none;
-  border-bottom: 1px solid #445366;
-  font-size: 1em;
-  font-weight: 300;
-  padding-bottom: 10px;
-  margin-top: 10px;
+    width: 200%;
+    background-color: transparent;
+    border: none;
+    color: black;
+    outline: none;
+    border-bottom: 1px solid #445366;
+    font-size: 1.2em;
+    font-weight: 300;
+    padding-bottom: 10px;
+    margin-top: 10px;
 }
 
 .FormField__Input::placeholder {
-  color: #616E7F;
+    color: #616E7F;
 }
 
 .FormField__Button {
-  background-color: #52C4B9;
-  color: white;
-  border: none;
-  outline: none;
-  border-radius: 25px;
-  padding: 15px 70px;
-  font-size: .8em;
-  font-weight: 500;
+    background-color: #52C4B9;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    padding: 15px 70px;
+    font-size: .8em;
+    font-weight: 500;
 }
 
 .FormField__Link {
-  color: #66707D;
-  text-decoration: none;
-  display: inline-block;
-  border-bottom: 1.5px solid #225E62;
-  padding-bottom: 5px;
+    color: #66707D;
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 1.5px solid #225E62;
+    padding-bottom: 5px;
 }
 
 .FormField__CheckboxLabel {
-  color: #646F7D;
-  font-size: .9em;
+    color: #646F7D;
+    font-size: .9em;
 }
 
 .FormField__Checkbox {
-  position: relative;
-  top: 1.5px;
+    position: relative;
+    top: 1.5px;
 }
 
 .FormField__TermsLink {
-  color: white;
-  border-bottom: 1px solid #199087;
-  text-decoration: none;
-  display: inline-block;
-  padding-bottom: 2px;
-  margin-left: 5px;
+    color: white;
+    border-bottom: 1px solid #199087;
+    text-decoration: none;
+    display: inline-block;
+    padding-bottom: 2px;
+    margin-left: 5px;
 }
 
 .drop {
-  background-color: white;
-  color:black;
-  width: 100%;
-  font-size: 100%;
-  padding: 10px;
-  
+    background-color: white;
+    color: black;
+    width: 100%;
+    font-size: 100%;
+    padding: 10px;
+
 }
 
 .errorMsg {
-  color: #cc0000;
-  margin-bottom: 12px;
+    color: #cc0000;
+    margin-bottom: 12px;
 }
 
 .data-card {
-  box-shadow: 8px 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.03s;
-  border-radius: 10px;
+    box-shadow: 8px 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.03s;
+    border-radius: 10px;
 }
 
 .flex-container {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 
 
 }
-.title{
- font-weight: bold;
+
+.title {
+    font-weight: bold;
 }
 
 .card {
-  margin: 100px 400px 5px 500px;
-  border-radius: 30px;
-  padding: 50px;
+    margin: 100px 400px 5px 500px;
+    border-radius: 30px;
+    padding: 50px;
 
 }
 
-.link{
-  background-color: #2E4158;
+.link {
+    background-color: #2E4158;
+
 }
 
-.questionField{
-  color:white;
-  font-weight: bold;
-  font-size: 150%;
-  font-family: "Bitstream Charter";
+.link1 {
+    padding: 5px;
+    margin-left: 430px;
+    margin-top: 500px;
+}
+.link2 {
+    background-color: #2E4158;
+    padding: 5px;
+    margin: 50px;
+
+}
+
+.questionField {
+    color: black;
+    font-weight: bold;
+    font-size: 150%;
+    font-family: "Bitstream Charter";
 }
 
 .FormField__Inputt {
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  color: white;
-  outline: none;
-  border-bottom: 1px solid #445366;
-  font-size: 1em;
-  font-weight: 300;
-  padding-bottom: 10px;
-  margin-top: 10px;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    border-bottom: 1px solid #445366;
+    font-size: 1em;
+    font-weight: 300;
+    padding-bottom: 10px;
+    margin-top: 10px;
 
 }
 
 .cardAdd {
-  margin: 150vh 400vh 75vh 100vh;
-  float: right;
-  padding: 100px;
+    margin: 150px 400px 75px 100px;
+    float: right;
+    padding: 100px;
 
-  border-radius: 30px;
+    border-radius: 30px;
+}
+
+.cardd {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+
 }
 
 .card-header {
-  color: black;
-  font-size: 30px;
-  font-family: "Times New Roman", Times, serif;
+    color: black;
+    font-size: 2vw;
+    font-family: "Times New Roman", Times, serif;
 }
 
 .card-body {
-  color: black;
-  font-family: "Times New Roman", Times, serif;
+    color: black;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1vw;
 }
 
+.image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.FormField__Label1 {
+    font-size: 20px;
+    color: black;
+}
+.add {
+    font-size: 50px;
+    margin-left: 800px;
+    margin-right: auto;
+    font-family: "Times New Roman", Times, serif;
+    margin-top: 20px;
+}
