@@ -51,7 +51,7 @@ class Dashboard extends Component {
                 <div>{
 
                     this.state.questions.map(question =>
-                        <div className=" cardd col-md-12" key={question._id}>
+                        <div className=" cardd  col-12" key={question._id}>
                             <p className=" card-header title">{question.title} </p>
 
                             <div className="card-body">

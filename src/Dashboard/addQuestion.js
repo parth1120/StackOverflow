@@ -104,16 +104,16 @@ class AddQuestion extends Component {
     render() {
         return (
 
-            <div>
-                <div className= "add">
+            <div className="container">
+                <div style={{fontSize:"4vh"}}>
                     Add Your Question
                 </div>
 
 
 
-                <form className = "cardAdd App__Form ">
+                <form col-md-1>
 
-                    <div className="FormField">
+                    <div className="FormField" >
                         <label className="questionField">Title : </label>
                         <input className="FormField__Inputt"
                                placeholder="Enter Title" type="text" onChange={this.changeTitle}
