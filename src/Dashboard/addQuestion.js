@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import * as alertify from "alertify.js";
 import TagsInput from 'react-tagsinput';
+import {Link} from "react-router-dom";
+
 
 class AddQuestion extends Component {
     constructor(props) {
@@ -109,8 +111,9 @@ class AddQuestion extends Component {
         return (
 
             <div className="container">
-                <div style={{fontSize: "4vh"}}>
+                <div style={{fontSize: "2vh"}}>
                     Add Your Question
+                    <Link className="btn-lg btn-danger" to="/">Back</Link>
                 </div>
 
 

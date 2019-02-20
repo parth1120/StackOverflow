@@ -13,7 +13,7 @@ class SignUpForm extends Component {
     constructor(props) {
         super(props);
 
-        this.handelSubmit = this.handelSubmit.bind(this);
+         this.handelSubmit = this.handelSubmit.bind(this);
 
 
     }
@@ -183,6 +183,7 @@ class SignUpForm extends Component {
 
 
     handelSubmit = async (e) => {
+
         if (e) e.preventDefault();
 
         await this.validateName();
