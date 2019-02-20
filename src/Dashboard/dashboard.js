@@ -18,7 +18,7 @@ class Dashboard extends Component {
 
         const token = localStorage.getItem('token');
 
-        axios.get('http://10.42.0.1:3000/api/question/my-questions',
+        axios.get('http://10.42.0.1:3000/api/question/my-questions/',
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
