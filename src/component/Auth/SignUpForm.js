@@ -50,9 +50,6 @@ class SignUpForm extends Component {
     };
 
 
-
-
-
     showUpperCase = () => {
         if (!regUpper.test(this.state.pass)) {
             this.setState({upperCase: true})
@@ -187,46 +184,42 @@ class SignUpForm extends Component {
 
     handelSubmit = async (e) => {
         if (e) e.preventDefault();
-        {
 
-            await this.validateName();
-            await this.validateEmail();
-            await this.validateNo();
-            await this.validatePass();
-            await this.validateCheck();
-
-
-            if (!this.state.nameRequired && !this.state.nameError && !this.state.emailRequired && !this.state.emailError
-                && !this.state.noRequired && !this.state.noError && !this.state.passRequired && !this.state.passError && !this.state.checkRequired) {
-                this.setState({showLoader: true});
-
-                const body = {
-                    name: this.state.name,
-                    email: this.state.email,
-                    mobile: this.state.no,
-                    password: this.state.pass,
-                };
-
-                axios.post(signUrl, body)
-                    .then((res) => {
-                        console.log(res);
-                        console.log(res.data);
-                        this.setState({showLoader: false});
-                        alertify.logPosition('top right').success(res.data.message);
+        await this.validateName();
+        await this.validateEmail();
+        await this.validateNo();
+        await this.validatePass();
+        await this.validateCheck();
 
 
+        if (!this.state.nameRequired && !this.state.nameError && !this.state.emailRequired && !this.state.emailError
+            && !this.state.noRequired && !this.state.noError && !this.state.passRequired && !this.state.passError && !this.state.checkRequired) {
+            this.setState({showLoader: true});
 
-                    })
-                    .catch((err) => {
-                        console.error(err.response);
-                        this.setState({showLoader: false});
-                        alertify.logPosition('top right').error(err.response.data.message);
+            const body = {
+                name: this.state.name,
+                email: this.state.email,
+                mobile: this.state.no,
+                password: this.state.pass,
+            };
 
-                    })
+            axios.post(signUrl, body)
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    this.setState({showLoader: false});
+                    alertify.logPosition('top right').success(res.data.message);
 
-            }
+
+                })
+                .catch((err) => {
+                    console.error(err.response);
+                    this.setState({showLoader: false});
+                    alertify.logPosition('top right').error(err.response.data.message);
+
+                })
+
         }
-
 
     };
 
@@ -236,79 +229,80 @@ class SignUpForm extends Component {
             <FirstPage>
                 <div className="App">
 
-            <div className="FormCenter">
-                {this.state.showLoader ?
-                    <div className="loader loader-default is-active" data-text="Verifying, please wait ..." data-blink
-                         id="loginLoader">
-                    </div> : null}
-
-                <div>
-                    <form onSubmit={this.handelSubmit}>
-
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="email">Name:</label>
-                            <input className="FormField__Input FormField__Input"
-                                   placeholder="Enter your Name" type="text" onChange={this.changeName}
-                                   value={this.state.name}/>
-                            {this.state.nameRequired ? <p className="errorMsg">Name required</p> : null}
-                            {this.state.nameError ? <p className="errorMsg">Invalid name</p> : null}
-                        </div>
-
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="email">Email ID:</label>
-                            <input className="FormField__Input" type="email" placeholder="Enter your Email"
-                                   onChange={this.changeEmail} value={this.state.email}/>
-                            {this.state.emailRequired ? <p className="errorMsg">Email required</p> : null}
-                            {this.state.emailError ? <p className="errorMsg">Invalid email</p> : null}
-                        </div>
-
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="email">Mobile No.:</label>
-                            <input className="FormField__Input  FormField__Input"
-                                    onChange={this.changeNo}
-                                   placeholder="Enter your Number" value={this.state.no}/>
-                            {this.state.noRequired ? <p className="errorMsg">Number required</p> : null}
-                            {this.state.noError ? <p className="errorMsg">Invalid Number</p> : null}
-                        </div>
-
-                        <div className="FormField">
-                            <label className="FormField__Label" htmlFor="email">Password:</label>
-                            <input className="FormField__Input FormField__Input"
-                                   placeholder="Enter your Password" type="password" onChange={this.changePass}
-                                   value={this.state.pass}/>
-                            {this.state.passRequired ? <p className="errorMsg">Password required</p> : null}
-                            {this.state.passError ? <p className="errorMsg">Invalid Password</p> : null}
-                        </div>
-
-
-                        <div className="errorMsg">
-                            <ul>
-                                {this.state.upperCase ? <li>At least one uppercase character</li> : null}
-                                {this.state.lowerCase ? <li>At least one lowercase character</li> : null}
-                                {this.state.number ? <li>At least one number character</li> : null}
-                                {this.state.char ? <li>At least one Special character</li> : null}
-                                {this.state.length ? <li>At least 8 character</li> : null}
-                            </ul>
-
-
-                        </div>
-
+                    <div className="FormCenter">
+                        {this.state.showLoader ?
+                            <div className="loader loader-default is-active" data-text="Verifying, please wait ..."
+                                 data-blink
+                                 id="loginLoader">
+                            </div> : null}
 
                         <div>
-                            <label className="FormField__Label1">Terms and conditions</label>
-                            <span> "      "</span>
+                            <form onSubmit={this.handelSubmit}>
 
-                            <input type="checkbox" onChange={this.changeCheck} value={this.state.check}></input>
-                            {this.state.checkRequired ? <p className="errorMsg">Terms required</p> : null}
+                                <div className="FormField">
+                                    <label className="FormField__Label" htmlFor="email">Name:</label>
+                                    <input className="FormField__Input FormField__Input"
+                                           placeholder="Enter your Name" type="text" onChange={this.changeName}
+                                           value={this.state.name}/>
+                                    {this.state.nameRequired ? <p className="errorMsg">Name required</p> : null}
+                                    {this.state.nameError ? <p className="errorMsg">Invalid name</p> : null}
+                                </div>
 
+                                <div className="FormField">
+                                    <label className="FormField__Label" htmlFor="email">Email ID:</label>
+                                    <input className="FormField__Input" type="email" placeholder="Enter your Email"
+                                           onChange={this.changeEmail} value={this.state.email}/>
+                                    {this.state.emailRequired ? <p className="errorMsg">Email required</p> : null}
+                                    {this.state.emailError ? <p className="errorMsg">Invalid email</p> : null}
+                                </div>
+
+                                <div className="FormField">
+                                    <label className="FormField__Label" htmlFor="email">Mobile No.:</label>
+                                    <input className="FormField__Input  FormField__Input"
+                                           onChange={this.changeNo}
+                                           placeholder="Enter your Number" value={this.state.no}/>
+                                    {this.state.noRequired ? <p className="errorMsg">Number required</p> : null}
+                                    {this.state.noError ? <p className="errorMsg">Invalid Number</p> : null}
+                                </div>
+
+                                <div className="FormField">
+                                    <label className="FormField__Label" htmlFor="email">Password:</label>
+                                    <input className="FormField__Input FormField__Input"
+                                           placeholder="Enter your Password" type="password" onChange={this.changePass}
+                                           value={this.state.pass}/>
+                                    {this.state.passRequired ? <p className="errorMsg">Password required</p> : null}
+                                    {this.state.passError ? <p className="errorMsg">Invalid Password</p> : null}
+                                </div>
+
+
+                                <div className="errorMsg">
+                                    <ul>
+                                        {this.state.upperCase ? <li>At least one uppercase character</li> : null}
+                                        {this.state.lowerCase ? <li>At least one lowercase character</li> : null}
+                                        {this.state.number ? <li>At least one number character</li> : null}
+                                        {this.state.char ? <li>At least one Special character</li> : null}
+                                        {this.state.length ? <li>At least 8 character</li> : null}
+                                    </ul>
+
+
+                                </div>
+
+
+                                <div>
+                                    <label className="FormField__Label1">Terms and conditions</label>
+                                    <span> "      "</span>
+
+                                    <input type="checkbox" onChange={this.changeCheck} value={this.state.check}></input>
+                                    {this.state.checkRequired ? <p className="errorMsg">Terms required</p> : null}
+
+                                </div>
+                                <br></br>
+                                <br></br>
+
+                                <input type="submit" value="Register" className="FormField__Button mr-20"></input>
+                            </form>
                         </div>
-                        <br></br>
-                        <br></br>
-
-                        <input type="submit" value="Register" className="FormField__Button mr-20"></input>
-                    </form>
-                </div>
-            </div>
+                    </div>
                 </div>
             </FirstPage>
 

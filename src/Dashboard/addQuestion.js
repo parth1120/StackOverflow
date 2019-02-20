@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import * as alertify from "alertify.js";
+import TagsInput from 'react-tagsinput';
 
 class AddQuestion extends Component {
     constructor(props) {
         super(props);
         this.handelSubmit = this.handelSubmit.bind(this);
+
     }
 
     state = {
         title: '',
         description: '',
-        tags: '',
+        tags: [],
 
         titleRequired: false,
         descriptionRequired: false,
         tagsRequired: false,
-        token : ''
+        token: ''
     };
+
 
     validateTitle = () => {
         if (this.state.title === '') {
@@ -47,56 +50,57 @@ class AddQuestion extends Component {
     };
 
     validateTags = () => {
-        if (this.state.tags === '') {
+        if (this.state.tags.length === 0) {
             this.setState({tagsRequired: true})
         }
     };
 
-    changeTags = (event) => {
-
-        this.setState({tagsRequired: false});
-        this.setState({tags: event.target.value}, () => {
+    changeTags = (tags) => {
+        this.setState({tags});
+        this.setState({tagsRequired: false}, () => {
             this.validateTags()
-        })
+        });
+
     };
 
+
     componentDidMount() {
-       this.setState({token:  localStorage.getItem('token')})
+        this.setState({token: localStorage.getItem('token')})
     }
 
 
     handelSubmit = async (e) => {
         if (e) e.preventDefault();
-        {
-            await this.validateTitle();
-            await this.validateDescription();
-            await this.validateTags();
+        await this.validateTitle();
+        await this.validateDescription();
+        await this.validateTags();
 
-            if (!this.state.titleRequired && !this.state.validateDescription  && !this.state.validateTags) {
+        if (!this.state.titleRequired && !this.state.descriptionRequired && !this.state.tagsRequired) {
 
-                const body = {
-                    title: this.state.title,
-                    description: this.state.description,
-                    tags: this.state.tags,
-                };
+            const body = {
+                title: this.state.title,
+                description: this.state.description,
+                tags: this.state.tags,
+            };
 
-                axios.post('http://10.42.0.1:3000/api/question', body,
-                    {
-                        headers: {
-                            'Authorization' : 'Bearer ' + this.state.token
-                        }
+            axios.post('http://10.42.0.1:3000/api/question', body,
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.state.token
                     }
-                )
-                    .then((res) => {
-                        console.log(res);
-                        console.log(res.data);
-                        alertify.logPosition('top right').success(res.data.message);
+                }
+            )
+                .then((res) => {
+                    console.log(res);
+                    console.log(res.data);
+                    alertify.logPosition('top right').success(res.data.message);
+                    this.props.history.push('/');
 
-                    })
-                    .catch((err) => {
-                        console.error(err.response);
-                    })
-            }
+                })
+                .catch((err) => {
+                    console.error(err.response);
+                    alertify.logPosition('top right').error(err.response.data.message);
+                })
         }
     };
 
@@ -105,15 +109,14 @@ class AddQuestion extends Component {
         return (
 
             <div className="container">
-                <div style={{fontSize:"4vh"}}>
+                <div style={{fontSize: "4vh"}}>
                     Add Your Question
                 </div>
 
 
+                <form>
 
-                <form col-md-1>
-
-                    <div className="FormField" >
+                    <div className="FormField">
                         <label className="questionField">Title : </label>
                         <input className="FormField__Inputt"
                                placeholder="Enter Title" type="text" onChange={this.changeTitle}
@@ -133,13 +136,15 @@ class AddQuestion extends Component {
 
                     <div className="FormField">
                         <label className="questionField">Tags : </label>
-                        <input className="FormField__Inputt"
-                               placeholder="Enter Title" type="text" onChange={this.changeTags}
-                               value={this.state.tags}/>
+                        {/*<input className="FormField__Inputt"*/}
+                        {/*placeholder="Enter Title" type="text" onChange={this.changeTags}*/}
+                        {/*value={this.state.tags}/>*/}
+                        <TagsInput className="FormField__Inputt" value={this.state.tags} onChange={this.changeTags}/>
                         {this.state.tagsRequired ? <p className="errorMsg">Tags required</p> : null}
 
                     </div>
-                    <input type="submit" value="Add Question" className="FormField__Button mr-20" onClick={this.handelSubmit}></input>
+                    <input type="submit" value="Add Question" className="FormField__Button mr-20"
+                           onClick={this.handelSubmit}></input>
                 </form>
 
             </div>
