@@ -7,13 +7,16 @@
     "alertify.js": "^1.0.12",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "moment": "^2.24.0",
     "react": "^16.8.1",
     "react-alertify-js": "0.0.1",
     "react-dom": "^16.8.1",
     "react-loader": "^2.4.5",
     "react-loader-spinner": "^2.3.0",
+    "react-moment": "^0.8.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.4",
+    "react-search-field": "^1.0.0",
     "react-tagsinput": "^3.19.0"
   },
   "scripts": {

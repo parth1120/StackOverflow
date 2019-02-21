@@ -12,10 +12,12 @@ class FirstPage extends Component {
                 <div >
                     <img src={Download} alt="golf" className="image"/>
                 </div>
+                <div className="d-flex justify-content-center">
 
-                    <Link className="btn-lg btn-info link1" to="/login">Sign In</Link>
+                    <Link className="btn btn-lg btn-outline-primary " to="/login">Sign In</Link>
 
-                    <Link className="btn-lg btn-info link2" to="/signup">Sign Up</Link>
+                    <Link className="btn btn-lg btn-outline-primary " to="/signup">Sign Up</Link>
+                </div>
 
 
                 {this.props.children}

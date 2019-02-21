@@ -3,10 +3,11 @@ import './component/Auth/SignRouter'
 import './Dashboard/dashboard'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {PrivateRoute} from "./Router/PrivateRoute";
-import Dashboard from "./Dashboard/dashboard";
+import myQuestion from "./component/myquestion/myQuestion";
 import AddQuestion from "./Dashboard/addQuestion";
 import SignInForm from "./component/Auth/SignInForm";
 import SignUpForm from "./component/Auth/SignUpForm";
+import Dashboard from "./Dashboard/dashboard";
 
 
 class App extends Component {
@@ -20,11 +21,12 @@ class App extends Component {
             <Router>
                 <div>
                     <Switch>
-                        <Route path="/login" exact component={SignInForm}></Route>
-                        <Route path="/signup" exact component={SignUpForm}></Route>
+                        <Route path="/login" exact component={SignInForm}/>
+                        <Route path="/signup" exact component={SignUpForm}/>
 
 
-                        <PrivateRoute exact path="/" component={Dashboard}></PrivateRoute>
+                        <PrivateRoute exact path="/myquestion" component={myQuestion}/>
+                        <PrivateRoute exact path="/" component={Dashboard}/>
                         <PrivateRoute path='/addquestion' exact component={AddQuestion}/>
                     </Switch>
                 </div>

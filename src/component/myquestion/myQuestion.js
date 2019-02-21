@@ -7,7 +7,7 @@ import 'react-tagsinput/react-tagsinput.css'
 import Moment from 'react-moment';
 
 
-class Dashboard extends Component {
+class myQuestion extends Component {
 
     state = {
         error: [],
@@ -43,7 +43,7 @@ class Dashboard extends Component {
     loadQuestion = () => {
         const token = localStorage.getItem('token');
 
-        axios.get(`http://10.42.0.1:3000/api/question/${this.state.page}`,
+        axios.get(`http://10.42.0.1:3000/api/question/my-questions/${this.state.page}`,
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -245,5 +245,5 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default myQuestion;
 

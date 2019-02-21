@@ -111,9 +111,13 @@ class AddQuestion extends Component {
         return (
 
             <div className="container">
-                <div style={{fontSize: "2vh"}}>
+                <div className="d-flex justify-content-between">
+                <div style={{fontSize: "3vh"}}>
                     Add Your Question
-                    <Link className="btn-lg btn-danger" to="/">Back</Link>
+
+                </div>
+                    {/*pending --back button functionality*/}
+                    <div> <Link className="btn btn-sm btn-outline-danger" to="/">Back</Link></div>
                 </div>
 
 
