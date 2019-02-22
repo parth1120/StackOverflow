@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
+import ReactDOM from "react-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import Loader from 'react-loader-spinner'
 import 'react-tagsinput/react-tagsinput.css'
 import Moment from 'react-moment';
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 class myQuestion extends Component {
@@ -24,6 +29,8 @@ class myQuestion extends Component {
     componentDidMount() {
 
 
+        const name = localStorage.getItem('name');
+        this.setState({name: name})
         const myUserId = localStorage.getItem('id');
         this.setState({id: myUserId}, () => {
             this.loadQuestion();
@@ -33,7 +40,7 @@ class myQuestion extends Component {
         window.onscroll = (ev) => {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                 const newPage = this.state.page + 1;
-                this.setState({page: newPage})
+                this.setState({page: newPage});
                 this.loadQuestion()
             }
         };
@@ -159,6 +166,31 @@ class myQuestion extends Component {
         localStorage.removeItem('token');
     }
 
+    handleChange = event => {
+
+
+
+        this.setState({page: 1});
+
+
+        const token = localStorage.getItem('token');
+
+        axios.get(`http://10.42.0.1:3000/api/question/search-my-questions/${event.target.value}/${this.state.page}`, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }).then(response => {
+            console.log(response);
+            this.setState({questions: response.data.data})
+
+
+
+        })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
     render() {
 
         return (
@@ -167,28 +199,55 @@ class myQuestion extends Component {
 
 
                 <div>
-                    <div className="d-flex justify-content-between">
-                        <Link className="btn btn-sm btn-outline-success " to="/addquestion">Add question</Link>
+                    <div className="d-flex justify-content-between top">
 
-                        <Link className="btn btn-sm btn-outline-danger" to="/login" onClick={this.logout}>Log out</Link>
+                        <FormControl className="formControl" variant="outlined">
+                            <InputLabel
+                                ref={ref => {
+                                    this.labelRef = ReactDOM.findDOMNode(ref);
+                                }}
+                                htmlFor="component-outlined"
+                            >
+                                Search
+                            </InputLabel>
+                            <OutlinedInput
+                                id="component-outlined"
+
+                                onChange={this.handleChange}
+                                labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
+                            />
+                        </FormControl>
+                        <Link className="btn btn-sm btn-outline-success text-center p-3 " to="/addquestion">Add question</Link>
+                        <Link className="btn btn-sm btn-outline-primary text-center p-3 " to="/">Dashboard</Link>
+                        <Dropdown className="dropdown">
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                {this.state.name}
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                                <Dropdown.Item href="/login" onClick={this.logout}>Logout</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+
                     </div>
                     {
 
                         this.state.questions.map(question =>
                             <div className=" cardd  col-12" key={question._id}>
-                                <p>  {question.title} </p>
+                                <p className="titleProp">  {question.title} </p>
                                 <hr></hr>
 
                                 <div className="card-body">
-                                    <p>{question.description} </p>
+                                    <p className="contentProp">{question.description} </p>
                                     <div className="d-flex justify-content-sm-start">{question.tags.map(tag =>
-                                        <p key={tag._id}>
+                                        <p className="contentProp" key={tag._id}>
                                             <button className="btn btn-sm btn-outline-info ">{tag.name}</button>
                                         </p>
                                     )}
                                     </div>
 
-
+                                <div className="contentProp" >
                                     {
                                         this.myCountLike(question.like) === 'positive' ?
                                             <button className="far fa-thumbs-up text-success"
@@ -202,10 +261,10 @@ class myQuestion extends Component {
                                                     onClick={this.handelLike(0, question._id)}/> :
                                             <button className="far fa-thumbs-down"
                                                     onClick={this.handelLike(-1, question._id)}/>}
-
+                                </div>
 
                                     <br/>
-                                    Total like count :
+                                    <p className="contentProp">Total like count :
                                     <b> {
                                         this.countLike(question.like)
                                     }</b>
@@ -215,7 +274,8 @@ class myQuestion extends Component {
                                             {question.createdAt}
                                         </Moment>
                                     </p>
-                                    <p>
+                                    </p>
+                                    <p className="contentProp">
                                         <b>Updated at -</b>
                                         <Moment format="DD/MM/YYYY  HH:mm">
                                             {question.updatedAt}

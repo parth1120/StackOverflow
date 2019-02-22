@@ -4,7 +4,6 @@ import axios from 'axios';
 import {loginUrl} from '../../shared/url'
 import * as alertify from 'alertify.js';
 
-
 import FirstPage from './firstPage'
 
 
@@ -76,6 +75,7 @@ class SignInForm extends Component {
                     this.setState({showLoader: false});
                     localStorage.setItem('token', res.data.token);
                     localStorage.setItem('id', res.data.id);
+                     localStorage.setItem('name', res.data.name);
                     this.props.history.push('/')
 
                 })
@@ -96,7 +96,7 @@ class SignInForm extends Component {
     render() {
         return (
             <FirstPage>
-                <div className="App">
+                <div className="App container">
                     <div className="FormCenter">
                         {this.state.showLoader ?
                             <div className="loader loader-default is-active" data-text="Verifying, please wait ..."

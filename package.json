@@ -10,6 +10,7 @@
     "moment": "^2.24.0",
     "react": "^16.8.1",
     "react-alertify-js": "0.0.1",
+    "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.1",
     "react-loader": "^2.4.5",
     "react-loader-spinner": "^2.3.0",

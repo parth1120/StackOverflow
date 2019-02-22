@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import Loader from 'react-loader-spinner'
 import 'react-tagsinput/react-tagsinput.css'
 import Moment from 'react-moment';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 class Dashboard extends Component {
@@ -17,13 +18,15 @@ class Dashboard extends Component {
 
         like: 0,
         updated: false,
-        id: ''
+        id: '',
+        name: ''
     };
 
 
     componentDidMount() {
 
-
+        const name = localStorage.getItem('name');
+        this.setState({name: name})
         const myUserId = localStorage.getItem('id');
         this.setState({id: myUserId}, () => {
             this.loadQuestion();
@@ -37,6 +40,10 @@ class Dashboard extends Component {
                 this.loadQuestion()
             }
         };
+
+        window.onbeforeunload = () => {
+            localStorage.clear();
+        }
     }
 
 
@@ -102,7 +109,7 @@ class Dashboard extends Component {
 
 
                         for (let i = 0; i < allQuestions.length; i++) {
-                            if (allQuestions[i]._id == newQuestion._id) {
+                            if (allQuestions[i]._id === newQuestion._id) {
                                 allQuestions[i] = newQuestion
                             }
                         }
@@ -159,6 +166,8 @@ class Dashboard extends Component {
         localStorage.removeItem('token');
     }
 
+
+
     render() {
 
         return (
@@ -169,53 +178,67 @@ class Dashboard extends Component {
                 <div>
                     <div className="d-flex justify-content-between">
                         <Link className="btn btn-sm btn-outline-success " to="/addquestion">Add question</Link>
+                        <Link className="btn btn-sm btn-outline-primary" to="/myquestion">My Questions</Link>
 
-                        <Link className="btn btn-sm btn-outline-danger" to="/login" onClick={this.logout}>Log out</Link>
+                        {/*<Link className="btn btn-sm btn-outline-danger" to="/login" onClick={this.logout}>Log out</Link>*/}
+
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                {this.state.name}
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
+                                <Dropdown.Item href="/login" onClick={this.logout}>Logout</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+
                     </div>
                     {
 
                         this.state.questions.map(question =>
                             <div className=" cardd  col-12" key={question._id}>
-                                <p>  {question.title} </p>
+                                <p className="titleProp">  {question.title} </p>
                                 <hr></hr>
 
                                 <div className="card-body">
-                                    <p>{question.description} </p>
+                                    <p className="contentProp">{question.description} </p>
                                     <div className="d-flex justify-content-sm-start">{question.tags.map(tag =>
                                         <p key={tag._id}>
-                                            <button className="btn btn-sm btn-outline-info ">{tag.name}</button>
+                                            <button className="btn btn-sm btn-outline-info tag ">{tag.name}</button>
                                         </p>
                                     )}
                                     </div>
 
+                                    <p className="contentProp">
+                                        {
+                                            this.myCountLike(question.like) === 'positive' ?
+                                                <button className="far fa-thumbs-up text-success"
+                                                        onClick={this.handelLike(0, question._id)}/> :
+                                                <button className="far fa-thumbs-up"
+                                                        onClick={this.handelLike(1, question._id)}/>}
 
-                                    {
-                                        this.myCountLike(question.like) === 'positive' ?
-                                            <button className="far fa-thumbs-up text-success"
-                                                    onClick={this.handelLike(0, question._id)}/> :
-                                            <button className="far fa-thumbs-up"
-                                                    onClick={this.handelLike(1, question._id)}/>}
-
-                                    {
-                                        this.myCountLike(question.like) === 'negative' ?
-                                            <button className="far fa-thumbs-down text-danger"
-                                                    onClick={this.handelLike(0, question._id)}/> :
-                                            <button className="far fa-thumbs-down"
-                                                    onClick={this.handelLike(-1, question._id)}/>}
-
+                                        {
+                                            this.myCountLike(question.like) === 'negative' ?
+                                                <button className="far fa-thumbs-down text-danger"
+                                                        onClick={this.handelLike(0, question._id)}/> :
+                                                <button className="far fa-thumbs-down"
+                                                        onClick={this.handelLike(-1, question._id)}/>}
+                                    </p>
 
                                     <br/>
+                                    <p className="contentProp">
                                     Total like count :
-                                    <b> {
+                                    <b > {
                                         this.countLike(question.like)
-                                    }</b>
-                                    <p>
+                                    }</b></p>
+                                    <p className="contentProp">
                                         <b>Created at -</b>
                                         <Moment format="DD/MM/YYYY  HH:mm">
                                             {question.createdAt}
                                         </Moment>
                                     </p>
-                                    <p>
+                                    <p className="contentProp">
                                         <b>Updated at -</b>
                                         <Moment format="DD/MM/YYYY  HH:mm">
                                             {question.updatedAt}

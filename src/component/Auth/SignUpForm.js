@@ -210,6 +210,7 @@ class SignUpForm extends Component {
                     console.log(res.data);
                     this.setState({showLoader: false});
                     alertify.logPosition('top right').success(res.data.message);
+                    this.props.history.push('/login')
 
 
                 })
