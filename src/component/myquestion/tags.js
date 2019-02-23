@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import Loader from 'react-loader-spinner'
 import 'react-tagsinput/react-tagsinput.css'
 import Moment from 'react-moment';
@@ -12,28 +12,33 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
-class myQuestion extends Component {
+class Tags extends Component {
 
-    state = {
-        error: [],
-        questions: [],
-        page: 1,
-        scrollLoader: false,
+    constructor(props){
+        super(props);
+        this.state = {
+            tag: '',
+            error: [],
+            questions: [],
+            page: 1,
+            scrollLoader: false,
 
-        like: 0,
-        updated: false,
-        id: ''
-    };
+            like: 0,
+            updated: false,
+            id: '',
 
+        }
+    }
 
     componentDidMount() {
 
 
+        const {tag} = this.props.match.params
         const name = localStorage.getItem('name');
         this.setState({name: name})
         const myUserId = localStorage.getItem('id');
         this.setState({id: myUserId}, () => {
-            this.loadQuestion();
+            this.loadQuestion(tag);
         });
 
 
@@ -47,17 +52,21 @@ class myQuestion extends Component {
     }
 
 
-    loadQuestion = () => {
+
+    loadQuestion = (tag) => {
         const token = localStorage.getItem('token');
 
-        axios.get(`http://10.42.0.1:3000/api/question/my-questions/${this.state.page}`,
+        axios.get(`http://10.42.0.1:3000/api/question/my-questions-by-tag/${tag}/${this.state.page}`,
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
                 }
             })
             .then(response => {
-                if (response.data.data.length === 10) {
+
+                console.log(response.data)
+                if (response.data.data.length === 10)  {
+
                     this.setState({scrollLoader: true})
 
                 } else {
@@ -219,6 +228,7 @@ class myQuestion extends Component {
                         </FormControl>
                         <Link className="btn btn-sm btn-outline-success text-center p-3 " to="/addquestion">Add question</Link>
                         <Link className="btn btn-sm btn-outline-primary text-center p-3 " to="/">Dashboard</Link>
+                        <Link className="btn btn-sm btn-outline-primary text-center p-3 " to="/myquestion">My Questions</Link>
                         <Dropdown className="dropdown">
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                                 {this.state.name}
@@ -243,37 +253,38 @@ class myQuestion extends Component {
                                     <div className="d-flex justify-content-sm-start">{question.tags.map(tag =>
                                         <p className="contentProp" key={tag._id}>
                                             <Link className="btn btn-sm btn-outline-info tag"  to={`/tags/${tag.name}`}>{tag.name}</Link>
+
                                         </p>
                                     )}
                                     </div>
 
-                                <div className="contentProp" >
-                                    {
-                                        this.myCountLike(question.like) === 'positive' ?
-                                            <button className="far fa-thumbs-up text-success"
-                                                    onClick={this.handelLike(0, question._id)}/> :
-                                            <button className="far fa-thumbs-up"
-                                                    onClick={this.handelLike(1, question._id)}/>}
+                                    <div className="contentProp" >
+                                        {
+                                            this.myCountLike(question.like) === 'positive' ?
+                                                <button className="far fa-thumbs-up text-success"
+                                                        onClick={this.handelLike(0, question._id)}/> :
+                                                <button className="far fa-thumbs-up"
+                                                        onClick={this.handelLike(1, question._id)}/>}
 
-                                    {
-                                        this.myCountLike(question.like) === 'negative' ?
-                                            <button className="far fa-thumbs-down text-danger"
-                                                    onClick={this.handelLike(0, question._id)}/> :
-                                            <button className="far fa-thumbs-down"
-                                                    onClick={this.handelLike(-1, question._id)}/>}
-                                </div>
+                                        {
+                                            this.myCountLike(question.like) === 'negative' ?
+                                                <button className="far fa-thumbs-down text-danger"
+                                                        onClick={this.handelLike(0, question._id)}/> :
+                                                <button className="far fa-thumbs-down"
+                                                        onClick={this.handelLike(-1, question._id)}/>}
+                                    </div>
 
                                     <br/>
                                     <p className="contentProp">Total like count :
-                                    <b> {
-                                        this.countLike(question.like)
-                                    }</b>
-                                    <p>
-                                        <b>Created at -</b>
-                                        <Moment format="DD/MM/YYYY  HH:mm">
-                                            {question.createdAt}
-                                        </Moment>
-                                    </p>
+                                        <b> {
+                                            this.countLike(question.like)
+                                        }</b>
+                                        <p>
+                                            <b>Created at -</b>
+                                            <Moment format="DD/MM/YYYY  HH:mm">
+                                                {question.createdAt}
+                                            </Moment>
+                                        </p>
                                     </p>
 
                                 </div>
@@ -300,5 +311,5 @@ class myQuestion extends Component {
     }
 }
 
-export default myQuestion;
+export default Tags;
 

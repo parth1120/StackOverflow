@@ -41,9 +41,6 @@ class Dashboard extends Component {
             }
         };
 
-        window.onbeforeunload = () => {
-            localStorage.clear();
-        }
     }
 
 
@@ -238,12 +235,7 @@ class Dashboard extends Component {
                                             {question.createdAt}
                                         </Moment>
                                     </p>
-                                    <p className="contentProp">
-                                        <b>Updated at -</b>
-                                        <Moment format="DD/MM/YYYY  HH:mm">
-                                            {question.updatedAt}
-                                        </Moment>
-                                    </p>
+
                                 </div>
 
 

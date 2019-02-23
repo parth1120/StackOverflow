@@ -8,6 +8,7 @@ import AddQuestion from "./Dashboard/addQuestion";
 import SignInForm from "./component/Auth/SignInForm";
 import SignUpForm from "./component/Auth/SignUpForm";
 import Dashboard from "./Dashboard/dashboard";
+import Tags from "./component/myquestion/tags"
 
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
                         <PrivateRoute exact path="/myquestion" component={myQuestion}/>
                         <PrivateRoute exact path="/" component={Dashboard}/>
                         <PrivateRoute path='/addquestion' exact component={AddQuestion}/>
+                        <PrivateRoute path='/tags/:tag' exact component={Tags}/>
                     </Switch>
                 </div>
             </Router>
