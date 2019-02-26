@@ -8,6 +8,7 @@ import Moment from 'react-moment';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
+
 class Dashboard extends Component {
 
     state = {
@@ -47,7 +48,7 @@ class Dashboard extends Component {
     loadQuestion = () => {
         const token = localStorage.getItem('token');
 
-        axios.get(`http://10.42.0.1:3000/api/question/${this.state.page}`,
+        axios.get(`http://10.42.0.1:3000/api/question/general/${this.state.page}`,
             {
                 headers: {
                     'Authorization': 'Bearer ' + token
@@ -163,6 +164,12 @@ class Dashboard extends Component {
         localStorage.removeItem('token');
     }
 
+    handleChang = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+
 
 
     render() {
@@ -195,14 +202,14 @@ class Dashboard extends Component {
 
                         this.state.questions.map(question =>
                             <div className=" cardd  col-12" key={question._id}>
-                                <p className="titleProp">  {question.title} </p>
+                                <Link className="titleProp" to={`/questionview/${question._id}`}>  {question.title} </Link>
                                 <hr></hr>
 
                                 <div className="card-body">
                                     <p className="contentProp">{question.description} </p>
                                     <div className="d-flex justify-content-sm-start">{question.tags.map(tag =>
                                         <p key={tag._id}>
-                                            <button className="btn btn-sm btn-outline-info tag ">{tag.name}</button>
+                                            <Link className="btn btn-sm btn-outline-info tag "  to={`/tags/${tag.name}`}>{tag.name}</Link>
                                         </p>
                                     )}
                                     </div>
@@ -229,6 +236,10 @@ class Dashboard extends Component {
                                     <b > {
                                         this.countLike(question.like)
                                     }</b></p>
+                                    <hr></hr>
+
+
+
                                     <p className="contentProp">
                                         <b>Created at -</b>
                                         <Moment format="DD/MM/YYYY  HH:mm">

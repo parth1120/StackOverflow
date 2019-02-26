@@ -76,6 +76,7 @@ class SignInForm extends Component {
                     localStorage.setItem('token', res.data.token);
                     localStorage.setItem('id', res.data.id);
                      localStorage.setItem('name', res.data.name);
+
                     this.props.history.push('/')
 
                 })

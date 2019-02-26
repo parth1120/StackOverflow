@@ -109,7 +109,7 @@ class myQuestion extends Component {
 
 
                         for (let i = 0; i < allQuestions.length; i++) {
-                            if (allQuestions[i]._id == newQuestion._id) {
+                            if (allQuestions[i]._id === newQuestion._id) {
                                 allQuestions[i] = newQuestion
                             }
                         }
@@ -235,17 +235,20 @@ class myQuestion extends Component {
 
                         this.state.questions.map(question =>
                             <div className=" cardd  col-12" key={question._id}>
-                                <p className="titleProp">  {question.title} </p>
+                                <div className="titleProp">  {question.title} </div>
                                 <hr></hr>
 
                                 <div className="card-body">
-                                    <p className="contentProp">{question.description} </p>
+                                    <div className="contentProp">{question.description} </div>
+                                    <br/>
+
                                     <div className="d-flex justify-content-sm-start">{question.tags.map(tag =>
-                                        <p className="contentProp" key={tag._id}>
+                                        <div className="contentProp" key={tag._id}>
                                             <Link className="btn btn-sm btn-outline-info tag"  to={`/tags/${tag.name}`}>{tag.name}</Link>
-                                        </p>
+                                        </div>
                                     )}
                                     </div>
+                                    <br/>
 
                                 <div className="contentProp" >
                                     {
@@ -264,17 +267,17 @@ class myQuestion extends Component {
                                 </div>
 
                                     <br/>
-                                    <p className="contentProp">Total like count :
+                                    <div className="contentProp">Total like count :
                                     <b> {
                                         this.countLike(question.like)
                                     }</b>
-                                    <p>
+                                    <div>
                                         <b>Created at -</b>
                                         <Moment format="DD/MM/YYYY  HH:mm">
                                             {question.createdAt}
                                         </Moment>
-                                    </p>
-                                    </p>
+                                    </div>
+                                    </div>
 
                                 </div>
 

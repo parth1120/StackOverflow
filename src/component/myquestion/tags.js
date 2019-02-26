@@ -14,7 +14,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 class Tags extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             tag: '',
@@ -30,12 +30,21 @@ class Tags extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {location, match} = this.props;
+        if (location.pathname !== prevProps.location.pathname) {
+            this.setState({questions: [], page: 1}, () => {
+                this.loadQuestion(match.params.tag);
+            });
+        }
+
+    }
+
     componentDidMount() {
 
-
-        const {tag} = this.props.match.params
+        const {tag} = this.props.match.params;
         const name = localStorage.getItem('name');
-        this.setState({name: name})
+        this.setState({name: name});
         const myUserId = localStorage.getItem('id');
         this.setState({id: myUserId}, () => {
             this.loadQuestion(tag);
@@ -52,7 +61,6 @@ class Tags extends Component {
     }
 
 
-
     loadQuestion = (tag) => {
         const token = localStorage.getItem('token');
 
@@ -65,7 +73,7 @@ class Tags extends Component {
             .then(response => {
 
                 console.log(response.data)
-                if (response.data.data.length === 10)  {
+                if (response.data.data.length === 10) {
 
                     this.setState({scrollLoader: true})
 
@@ -118,7 +126,7 @@ class Tags extends Component {
 
 
                         for (let i = 0; i < allQuestions.length; i++) {
-                            if (allQuestions[i]._id == newQuestion._id) {
+                            if (allQuestions[i]._id === newQuestion._id) {
                                 allQuestions[i] = newQuestion
                             }
                         }
@@ -178,7 +186,6 @@ class Tags extends Component {
     handleChange = event => {
 
 
-
         this.setState({page: 1});
 
 
@@ -191,7 +198,6 @@ class Tags extends Component {
         }).then(response => {
             console.log(response);
             this.setState({questions: response.data.data})
-
 
 
         })
@@ -226,9 +232,11 @@ class Tags extends Component {
                                 labelWidth={this.labelRef ? this.labelRef.offsetWidth : 0}
                             />
                         </FormControl>
-                        <Link className="btn btn-sm btn-outline-success text-center p-3 " to="/addquestion">Add question</Link>
+                        <Link className="btn btn-sm btn-outline-success text-center p-3 " to="/addquestion">Add
+                            question</Link>
                         <Link className="btn btn-sm btn-outline-primary text-center p-3 " to="/">Dashboard</Link>
-                        <Link className="btn btn-sm btn-outline-primary text-center p-3 " to="/myquestion">My Questions</Link>
+                        <Link className="btn btn-sm btn-outline-primary text-center p-3 " to="/myquestion">My
+                            Questions</Link>
                         <Dropdown className="dropdown">
                             <Dropdown.Toggle variant="success" id="dropdown-basic">
                                 {this.state.name}
@@ -249,16 +257,17 @@ class Tags extends Component {
                                 <hr></hr>
 
                                 <div className="card-body">
-                                    <p className="contentProp">{question.description} </p>
+                                    <div className="contentProp">{question.description} </div>
                                     <div className="d-flex justify-content-sm-start">{question.tags.map(tag =>
-                                        <p className="contentProp" key={tag._id}>
-                                            <Link className="btn btn-sm btn-outline-info tag"  to={`/tags/${tag.name}`}>{tag.name}</Link>
+                                        <div className="contentProp" key={tag._id}>
+                                            <Link className="btn btn-sm btn-outline-info tag"
+                                                  to={`/tags/${tag.name}`}>{tag.name}</Link>
 
-                                        </p>
+                                        </div>
                                     )}
                                     </div>
 
-                                    <div className="contentProp" >
+                                    <div className="contentProp">
                                         {
                                             this.myCountLike(question.like) === 'positive' ?
                                                 <button className="far fa-thumbs-up text-success"
@@ -275,17 +284,17 @@ class Tags extends Component {
                                     </div>
 
                                     <br/>
-                                    <p className="contentProp">Total like count :
+                                    <div className="contentProp">Total like count :
                                         <b> {
                                             this.countLike(question.like)
                                         }</b>
-                                        <p>
+                                        <div>
                                             <b>Created at -</b>
                                             <Moment format="DD/MM/YYYY  HH:mm">
                                                 {question.createdAt}
                                             </Moment>
-                                        </p>
-                                    </p>
+                                        </div>
+                                    </div>
 
                                 </div>
 
